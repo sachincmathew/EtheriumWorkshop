@@ -42,7 +42,7 @@ contract MyStore{
     //step 6 
     address public owner;
     
-    constructor(){
+    constructor() public{
         owner = msg.sender;
     }
     
