@@ -22,21 +22,21 @@ const VERSION = 1;
 const PORT = options.port || parseInt(process.env.APP_PORT) || 3000;
 
 //TODO Exercise 0. Start of configuration
-//TODO Set the provider's URL 
-const PROVIDER_URL = options.wsProvider || '__DEFAULT_PROVIDER_URL__';
+//provider's URL 
+const PROVIDER_URL = options.wsProvider || 'https://stackup-eth.ngrok.io';
 
 //TODO Set your wallet's address
-const WALLET = options.wallet || '__DEFAULT_WALLET__'
+const WALLET = options.wallet || '0xe3D0aAF2b003c2b1bA922e12480Fe431B4E6b808'
 
 //TODO Set your wallet's private key. Prefix with 0x
 //NOTE: For rinkeby only. DO NOT use your real private key
-const PRIVATE_KEY = options.privateKey || '__DEFAULT_PRIVATE_KEY__'
+const PRIVATE_KEY = options.privateKey || '0x91b6fbdb0366248ef69dffd487a7960b3bd00f643ea638c6196860bb079254fa'
 
 //TODO Your contract ABI file name here. Please copy to public directory
-const CONTRACT_ABI = options.contract || '__DEFAULT_CONTRACT_ABI__';
+const CONTRACT_ABI = options.contract || 'MyStore.abi';
 
 //TODO Your contract's address here
-const CONTRACT_ADDRESS = options.contractAddress || '__DEFAULT_CONTRACT_ADDRESS__';
+const CONTRACT_ADDRESS = options.contractAddress || '0xf7E13b60166BA4b22CB4C914f7c6991DA27b9AF9';
 
 //End of configuration
 
@@ -48,16 +48,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //TODO Exercise 1. Load W3 and ABI
-
+const Web3 = require('web3');
 
 //TODO Exercise 2. Connect to the Blockchain 
-
+const rinkeby = new Web3(PROVIDER_URL);
 
 //TODO Exercise 3. Parse to ABI to JSON
-
+const buff = fs.readFileSync(path.join(__dirname, 'public', CONTRACT_ABI), 'utf8');
+const MyStore = JSON.parse(buff);
 
 //TODO Exercise 4. Instantiate an instance of the contract
-
+const contract = new rinkeby.eth.Contract(MyStore, CONTRACT_ADDRESS);
 
 //End of setup
 
@@ -96,6 +97,41 @@ app.post(`/api/v${VERSION}/checkout/:transaction`,
 
 //TODO: Exercise 7. Signing a method
 //TODO Listen to Balance event
+app.get(`/api/v${VERSION}/balance`,
+	(req, resp) => {
+
+		//Get the ABI for checkBalance() from the contract
+		const checkBalance = contract.methods.checkBalance().encodeABI();
+
+		//Create a transaction object
+		const tx = {
+			to: CONTRACT_ADDRESS,
+			from: WALLET,
+			gas: '2000000',
+			data: checkBalance,
+			chainId: 4, //Rinkeby
+			value: '0'
+		};
+
+		//Sign and send the transaction
+		rinkeby.eth.accounts.signTransaction(tx, PRIVATE_KEY)
+			.then(signed => {
+				rinkeby.eth.sendSignedTransaction(signed.rawTransaction)
+					.on('confirmation', (confNum, _) => {
+						console.log('confirmation number: ', confNum);
+					})
+					.on('receipt', receipt => {
+						//Return balance details as JSON
+						resp.status(201).json(receipt);
+					})
+					.on('error', error => {
+						console.error('error ', error);
+						resp.status(400).json({ error: JSON.stringify(error) });
+					});
+			});
+	}
+);
+
 
 app.get(`/api/v${VERSION}/balance`,
 	(req, resp) => {

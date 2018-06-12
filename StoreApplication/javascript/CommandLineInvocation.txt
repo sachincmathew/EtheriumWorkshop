@@ -1,0 +1,6 @@
+node main.js \
+    --contract 'MyStore.abi' \
+    --contractAddress '0xf7E13b60166BA4b22CB4C914f7c6991DA27b9AF9' \
+    --wallet '0xe3D0aAF2b003c2b1bA922e12480Fe431B4E6b808' \
+    --privateKey '0x91b6fbdb0366248ef69dffd487a7960b3bd00f643ea638c6196860bb079254fa' \
+    --wsProvider 'wss://stackup-eth.ngrok.io/ws'
