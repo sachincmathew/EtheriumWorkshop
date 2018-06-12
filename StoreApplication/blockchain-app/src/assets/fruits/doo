@@ -1,0 +1,11 @@
+#!/bin/bash
+echo "["
+
+for I in `ls *.png`; do
+	IFS="."
+	set $I
+	IFS=" "
+	echo "	{ name: '`echo ${1} | tr '_' ' '`', image: '/assets/fruits/${I}', price: 1 }', "
+done
+
+echo "]"

@@ -1,0 +1,14 @@
+<mat-nav-list (click)="navListClicked()">
+	<a [routerLink]="['/']" mat-list-item>
+		<mat-icon>shopping_cart</mat-icon>
+		<span class="nav-caption">Shop</span>
+	</a>
+	<a [routerLink]="['/wallet']" mat-list-item>
+		<mat-icon>monetization_on</mat-icon>
+		<span class="nav-caption">My Wallet</span>
+	</a>
+	<a [routerLink]="['/setup']" mat-list-item>
+		<mat-icon>settings</mat-icon>
+		<span class="nav-caption">Setup</span>
+	</a>
+</mat-nav-list>

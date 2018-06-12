@@ -1,0 +1,28 @@
+<form #walletForm="ngForm" (ngSubmit)="refreshWallet()" fxLayout="column">
+
+	<mat-form-field>
+		<input type="text" name="wallet" matInput readonly
+				placeholder="Wallet's address" [ngModel]="wallet">
+	</mat-form-field>
+
+	<mat-form-field>
+		<input type="text" name="balance" matInput readonly
+				placeholder="Wallet balance" [ngModel]="balance">
+	</mat-form-field>
+
+	<div fxLayoutAlign="end">
+
+		<button type="button" mat-button mat-raised-button style="margin-right: 5px"
+					(click)="goBack()">
+			<mat-icon>arrow_back</mat-icon>
+			<span style="margin-left: 5px">Back</span>
+		</button>
+
+		<button type="submit" mat-button mat-raised-button color="accent">
+			<mat-icon>refresh</mat-icon>
+			<span style="margin-left: 5px;">Refresh</span>
+		</button>
+
+	</div>
+
+</form>

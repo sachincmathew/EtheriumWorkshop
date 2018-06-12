@@ -1,0 +1,25 @@
+<form #setupForm="ngForm" (ngSubmit)="saveSettings(setupForm)" fxLayout="column">
+
+	<mat-form-field>
+		<input type="text" name="merchantsWallet" readonly
+				matInput [ngModel]="fromServerWallet">
+		<mat-hint>This is the Contract's address from the server</mat-hint>
+	</mat-form-field>
+
+	<div fxLayoutAlign="end">
+		<button type="button" mat-button mat-raised-button style="margin-right: 5px"
+					(click)="goBack()">
+			<mat-icon>arrow_back</mat-icon>
+			<span style="margin-left: 5px">Back</span>
+		</button>
+
+		<!--
+		<button type="submit" mat-button mat-raised-button color="accent"
+					[disabled]="setupForm.invalid">
+			<mat-icon>save_alt</mat-icon>
+			<span style="margin-left: 5px;">Save</span>
+		</button>
+		-->
+	</div>
+
+</form>

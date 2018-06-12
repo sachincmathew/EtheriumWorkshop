@@ -1,0 +1,180 @@
+swagger: "2.0"
+info: 
+   title: "MyStore"
+   description: "This is a shopping cart application for StackUp BMT Workshop"
+   version: "1.0"
+   license:
+      name: "Apache 2.0"
+      url: "https://www.apache.org/licenses/LICENSE-2.0"
+
+basePath: "/api/v1"
+
+schemes:
+   - "http"
+   - "https"
+
+paths:
+
+   /ethereum:
+      get:
+         description: "Get the current Ethereum exchange rate"
+         operationId: "getEthereumToSGD"
+         produces:
+            - "application/json"
+         responses:
+            "200":
+              description: "ETH against SGD rate"
+              schema:
+                 $ref: "#/definitions/EthereumRate"
+
+   /contract:
+      get:
+         description: "Get the contract's ABI file name and address"
+         operationId: "getContract"
+         produces:
+            - "application/json"
+         responses:
+            "200":
+               description: "Contract's ABI file name and address"
+               schema:
+                  $ref: "#/definitions/ContractInfo"
+
+   /contract/{ABI_filename}:
+      get:
+         description: "Get the bits of the contract's ABI file"
+         operationId: "getContractABI"
+         produces:
+            - "text/plain"
+         parameters:
+            - name: "ABI_filename"
+              in: "path"
+              description: "ABI file name"
+              required: true
+              type: "string"
+         responses:
+            "200":
+               description: "Bits"
+            "404":
+               description: "File not found"
+
+   /viewOrder:
+      get:
+         description: "Returns a placed order"
+         operationId: "getViewOrder"
+         produces:
+            - "application/json"
+         parameters:
+            - name: "address"
+              in: "query"
+              description: "Customer wallet's address"
+              required: true
+              type: "string"
+            - name: "orderId"
+              in: "query"
+              description: "Order id"
+              required: true
+              type: "integer"
+              format: "uint"
+         responses:
+            "200":
+               description: "Details of the order"
+               type: "object"
+            "400":
+               description: "Error"
+
+   /checkout/{transactionId}:
+      post:
+         description: "Get the details of an Ethereum transaction"
+         operationId: "getTransaction"
+         consumes:
+            - application/x-www-form-urlencoded
+         produces:
+            - "application/json"
+         parameters:
+            - name: "transactionId"
+              in: "path"
+              description: "Valid Ethereum transaction id"
+              required: true
+              type: "string"
+            - name: "transaction"
+              in: "formData"
+              description: "Transaction id retured by Ethereum on successfully calling checkout from the contract"
+              required: true
+              type: "string"
+            - name: "orderId"
+              in: "formData"
+              description: "Order id returned by the checkout method from the contract"
+              required: true
+              type: "number"
+              format: "uint"
+            - name: "content"
+              in: "formData"
+              description: "Contents of the purchase"
+              required: true
+              type: "object"
+            - name: "total"
+              description: "Total purchases in Wei"
+              required: true
+              type: "number"
+              format: "uint"
+         responses:
+            "200":
+               description: "Details of the given transaction"
+               type: "object"
+            "400":
+               description: "Error"
+
+   /balance:
+      get:
+         description: "Get the contract's balance"
+         operationId: "getBalance"
+         produces:
+            - application/json
+         responses:
+            "200":
+               description: "Contract's balance in Wei"
+               type: "object"
+            "400":
+               description: "Error"
+
+definitions:
+
+   EthereumRate:
+      type: "object"
+      properties:
+         algorithm:
+           type: "string"
+         data:
+           $ref: "#/definitions/ExchangeRate"
+         headers:
+           type: "string"
+         keyId:
+           type: "string"
+         signature:
+           type: "string"
+         timestamp:
+           type: "string"
+           format: date-time
+       required:
+         - "algorithm"
+         - "data"
+         - "headers"
+         - "keyId"
+         - "signature"
+         - "timestamp"
+
+   ExchangeRate:
+      type: "object"
+      properties:
+         SGD:
+            type: "number"
+
+   ContractInfo:
+      type: "object"
+      properties:
+         contract:
+            description: "Contract ABI file name"
+            type: "string"
+         address:
+            description: "Deployed contract's address"
+            type: "string"

@@ -1,0 +1,22 @@
+{
+  "name": "bmt_blockchain_javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "command-line-args": "^5.0.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "path": "^0.12.7",
+    "querystring": "^0.2.0",
+    "request": "^2.86.0",
+    "web3": "^1.0.0-beta.34"
+  }
+}

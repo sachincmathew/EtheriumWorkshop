@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>View Order</title>
+	</head>
+	<body>
+		<h1>View Order</h1>
+
+		<form method="GET" action="/api/v1/viewOrder">
+			<table>
+				<tr>
+					<td>Address:</td>
+					<td>
+						<input type="text" name="address" placeholder="Wallet's address" required>
+					</td>
+				</tr>
+				<tr>
+					<td>Order Id:</td>
+					<td>
+						<input type="number" name="orderId" placeholder="Order id" min="0" required>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td style="float: right">
+						<button type="submit">Search</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+	</body>
+</html>

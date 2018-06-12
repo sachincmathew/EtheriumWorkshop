@@ -1,0 +1,19 @@
+<mat-list>
+	<h3 mat-subheader>Fruits</h3>
+	<mat-list-item *ngFor="let i of inventory; let idx = index"
+			fxLayout="row" fxLayoutAlign="start center" (click)="addToBasket(idx)">
+
+		<img [src]="i.image">
+
+		<div fxLayout="column" fxLayoutAlign="start">
+			<span class="item-name">{{ i.name | uppercase }}</span>
+			<span class="item-price">{{ i.price | currency: 'SGD' }}</span>
+		</div>
+
+		<div (click)="removeFromBasket(idx, $event)" style="align-items: flex-end">
+			<span *ngIf="i.quantity" class="item-quantity">
+				({{ i.quantity }})
+			</span>
+		</div>
+	</mat-list-item>
+</mat-list>

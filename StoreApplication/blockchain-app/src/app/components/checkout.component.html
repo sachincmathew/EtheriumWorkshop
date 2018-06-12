@@ -1,0 +1,39 @@
+
+<form #checkoutForm="ngForm" fxLayout="column">
+	<mat-form-field fxFlex="1 1 auto">
+		<input type="text" name="ethExchange" readonly 
+				placeholder="Rate SGD to ETH" matInput [ngModel]="rate">
+	</mat-form-field>
+
+	<mat-form-field>
+		<input type="text" name="totalCostSGD" readonly
+				placeholder="Total cost of your items in SGD" 
+				matInput [ngModel]="totalCostSGD | currency: 'SGD'">
+	</mat-form-field>
+
+	<mat-form-field>
+		<input id="" type="text" name="totalCostETH" readonly
+				placeholder="Total cost of your items in ETH"
+	 			matInput [ngModel]="totalCostETH | currency: 'ETH': 'ETH': '1.1-100'">	
+	</mat-form-field>
+
+	<mat-form-field>
+		<input type="text" name="gasEstimateETH" readonly
+				placeholder="Estimated gas cost in ETH"
+				matInput [ngModel]="gasEstimateETH | currency: 'ETH': 'ETH': '1.1-100'">
+	</mat-form-field>
+
+	<mat-form-field>
+		<input id="" type="text" name="totalFinal" readonly
+				placeholder="Total cost plus gas in ETH"
+	 			matInput [ngModel]="(totalCostETH + gasEstimateETH) | currency: 'ETH': 'ETH': '1.1-100'">	
+	</mat-form-field>
+
+	<div fxLayoutAlign="end">
+		<button type="submit" mat-button mat-raised-button color="accent"
+				[disabled]="rate < 0" (click)="performCheckout()"> 
+			<mat-icon>payment</mat-icon>
+			Pay
+		</button>
+	</div>
+</form>

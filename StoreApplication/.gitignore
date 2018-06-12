@@ -1,0 +1,8 @@
+**/node_modules
+**/__pycache__
+**/venv
+**/public
+**/dist
+**/build
+
+typescript

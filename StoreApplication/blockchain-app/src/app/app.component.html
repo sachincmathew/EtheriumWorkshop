@@ -1,0 +1,29 @@
+<mat-sidenav-container fullscreen>
+
+	<mat-sidenav #menu (click)="menu.close()">
+		<app-menu (onMenuClicked)="menu.close()"></app-menu>
+	</mat-sidenav>
+
+	<mat-sidenav-content>
+
+		<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="start center">
+			<img src="/assets/bitcoin.png" class="logo" (click)="menu.toggle()">
+			<span fxFlex="1 1 0">Buy Digital!</span>
+			<a mat-icon-button 
+					(click)="gotoCheckout()"
+					*ngIf="showCheckout" [disabled]="disableCheckout">
+				<mat-icon>payment</mat-icon>
+			</a>
+			<a [routerLink]="['/']" mat-icon-button
+					*ngIf="showCart">
+				<mat-icon>shopping_cart</mat-icon>
+			</a>
+		</mat-toolbar>
+
+		<main>
+			<router-outlet></router-outlet>
+		</main>
+
+	</mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -1,0 +1,25 @@
+mat-list-item {
+	margin-bottom: 10px;
+}
+
+img {
+	height: 3.2em;
+	margin-right: 1em;
+}
+
+.item-name {
+	font-size: 1.5em;;
+	font-weight: bold;
+}
+
+.item-price {
+	display: block;
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+.item-quantity {
+	margin-left: 7vw;
+	color: blue;
+	font-size: 2em;
+}

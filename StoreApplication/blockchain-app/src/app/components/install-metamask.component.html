@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Install MetaMask</h1>
+
+<mat-dialog-content>
+	It appears you have not install MetaMask Extension. Please
+	install the extension before continuing.
+	If you do not install MetaMask you will not be able to purchase
+	anything.
+</mat-dialog-content>
+
+<mat-dialog-actions>
+	<button type="button" [mat-dialog-close]="false"
+			mat-button mat-raised-button color="warn">
+		Not now
+	</button>
+	<button type="button" [mat-dialog-close]="true" 
+			mat-button mat-raised-button color="primary">
+		Install
+	</button>
+</mat-dialog-actions>
